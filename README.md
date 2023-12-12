@@ -3,7 +3,7 @@ The aim of this project is to create a web app that will allow the user to reser
 
 It will make use of the following Google Cloud features:
 * Cloud Run – to run the backend and frontend in a serverless environment
-* Cloud Datastore – to store reservation data
+* Cloud SQL – to store reservation data
 * Cloud Storage – to store photos of rooms uploaded by the admin
 * Cloud Logging – to provide logs of attempted reservations
 * Cloud Functions – to send a notification to the front desk containing reservation data each morning
