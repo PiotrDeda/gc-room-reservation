@@ -7,6 +7,10 @@ resource "google_cloud_run_service" "tfer--room-reservation-410823-europe-west1-
     spec {
       containers {
         image = "europe-west1-docker.pkg.dev/room-reservation-410823/rr-image-repository/rr-backend"
+
+        ports {
+          container_port = "25497"
+        }
       }
     }
   }
@@ -21,6 +25,10 @@ resource "google_cloud_run_service" "tfer--room-reservation-410823-europe-west1-
     spec {
       containers {
         image = "europe-west1-docker.pkg.dev/room-reservation-410823/rr-image-repository/rr-frontend"
+
+        ports {
+          container_port = "25498"
+        }
       }
     }
   }

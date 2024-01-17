@@ -39,7 +39,7 @@ bower_components
 build/Release
 
 # Dependency directories
-frontend/node_modules/
+node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -201,3 +201,4 @@ replay_pid*
 
 .idea
 /backend/build
+/architecture/pulumi/bin
