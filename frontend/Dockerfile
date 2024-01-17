@@ -6,4 +6,4 @@ RUN npm install
 COPY . .
 EXPOSE 25498
 RUN npm run build
-ENTRYPOINT ["npm", "run", "dev"]
+ENTRYPOINT ["npm", "run", "prod"]

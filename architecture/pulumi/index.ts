@@ -49,6 +49,13 @@ const rr_frontend = new gcp.cloudrun.Service("tfer--room-reservation-410823-euro
     },
 });
 
+const rr_frontend_access_control = new gcp.cloudrun.IamBinding("room-reservation-410823-europe-west1-rr-frontend-access-control-0", {
+    location: rr_frontend.location,
+    service: rr_frontend.name,
+    role: "roles/run.invoker",
+    members: ["allUsers"],
+});
+
 /*const rr_email_function = new gcp.cloudfunctions.Function("tfer--room-reservation-410823-rr-email-function-europe-west1-0", {
     name: "rr-email-function",
     project: "room-reservation-410823",
