@@ -33,6 +33,13 @@ const rr_backend = new gcp.cloudrun.Service("tfer--room-reservation-410823-europ
     },
 });
 
+const rr_backend_access_control = new gcp.cloudrun.IamBinding("room-reservation-410823-europe-west1-rr-backend-access-control-0", {
+    location: rr_backend.location,
+    service: rr_backend.name,
+    role: "roles/run.invoker",
+    members: ["allUsers"],
+});
+
 const rr_frontend = new gcp.cloudrun.Service("tfer--room-reservation-410823-europe-west1-rr-frontend-0", {
     location: "europe-west1",
     name: "rr-frontend",
@@ -43,6 +50,10 @@ const rr_frontend = new gcp.cloudrun.Service("tfer--room-reservation-410823-euro
                 image: "europe-west1-docker.pkg.dev/room-reservation-410823/rr-image-repository/rr-frontend:latest",
                 ports: [{
                     containerPort: 25498,
+                }],
+                envs: [{
+                    name: "BACKEND_URL",
+                    value: rr_backend.statuses[0].url,
                 }],
             }],
         },
