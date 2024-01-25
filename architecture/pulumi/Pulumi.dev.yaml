@@ -1,3 +1,7 @@
-encryptionsalt: v1:mr4rB2Rj+b8=:v1:gVGPKxNpT1OHPtgz:hBvkz4lc8iUPCfzKPe2kRaVAbYDq/Q==
+encryptionsalt: v1:nUpbKcDL29Y=:v1:9kSHOF07y040MWFc:9EggTpB0d8FXapIuKEyJrnyAxglJew==
 config:
   gcp:project: room-reservation-410823
+  rr-architecture:dbPass:
+    secure: v1:tI8oeNgDNfzOQz5C:YGAmfrZwnYA+rfio6AzN6VA1A+hF1k1S6i2l
+  rr-architecture:emailPass:
+    secure: v1:Hl8briQ+7apE3uSP:A7Q1lnyM9I8s4xPe/ZJYmP5JGNd8adgM7TGFzNCwyFSGyxs=

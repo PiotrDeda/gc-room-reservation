@@ -11,7 +11,7 @@ const emit = defineEmits(['refresh']);
 const deletingReservation = ref(false);
 
 function formatTime(timestamp) {
-  const options = {hour: '2-digit', minute: '2-digit'};
+  const options = {day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'};
   const time = new Date(timestamp);
   return time.toLocaleTimeString([], options);
 }

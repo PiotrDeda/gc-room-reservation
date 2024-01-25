@@ -32,7 +32,7 @@ onMounted(async () => {
   <div>
     <div v-if="loading">Loading…</div>
     <div v-for="reservation in reservations" v-else :key="reservation.reservationId" class="tablelist">
-      <ReservationCard :reservation="reservation"/>
+      <ReservationCard :reservation="reservation" @refresh="fetchReservations"/>
     </div>
     <hr/>
     <ReservationSubmit @refresh="fetchReservations"/>

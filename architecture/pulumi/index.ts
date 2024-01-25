@@ -1,11 +1,16 @@
 // noinspection JSUnusedLocalSymbols
 
 import * as gcp from "@pulumi/gcp";
+import {Config} from "@pulumi/pulumi";
 
+const config = new Config();
 const project = "room-reservation-410823";
 const region = "europe-west1";
 const db_user = "rradmin";
-const db_password = "default123";
+const db_password = config.requireSecret("dbPass");
+const email_username = "roomreservationsender@gmail.com";
+const email_password = config.requireSecret("emailPass");
+const email_recipient = "roomreservationrecipient@op.pl";
 
 const rr_database = new gcp.sql.DatabaseInstance("tfer--room-reservation-410823-rr-database-instance-europe-west1-0", {
     databaseVersion: "POSTGRES_15",
@@ -40,7 +45,7 @@ const rr_database_user = new gcp.sql.User("tfer--room-reservation-410823-rr-data
 
 });
 
-const noauth = gcp.organizations.getIAMPolicyOutput({
+const rr_noauth = gcp.organizations.getIAMPolicyOutput({
     bindings: [{
         role: "roles/run.invoker",
         members: ["allUsers"],
@@ -89,7 +94,7 @@ const rr_backend_access_control = new gcp.cloudrunv2.ServiceIamPolicy("room-rese
     name: "rr-backend",
     location: rr_backend.location,
     project: rr_backend.project,
-    policyData: noauth.apply(noauth => noauth.policyData),
+    policyData: rr_noauth.apply(noauth => noauth.policyData),
 });
 
 const rr_frontend = new gcp.cloudrunv2.Service("tfer--room-reservation-410823-europe-west1-rr-frontend-0", {
@@ -114,17 +119,47 @@ const rr_frontend_access_control = new gcp.cloudrunv2.ServiceIamPolicy("room-res
     name: "rr-frontend",
     location: rr_frontend.location,
     project: rr_frontend.project,
-    policyData: noauth.apply(noauth => noauth.policyData),
+    policyData: rr_noauth.apply(noauth => noauth.policyData),
 });
 
-/*const rr_email_pubsub = new gcp.pubsub.Topic("tfer--room-reservation-410823-rr-email-pubsub-0", {
-    name: "rr-email-pubsub",
+const rr_send_email_function = new gcp.cloudfunctionsv2.Function("room-reservation-410823-europe-west1-rr-send-email-0", {
+    buildConfig: {
+        runtime: "python39",
+        entryPoint: "send_email",
+        source: {
+            storageSource: {
+                bucket: "deda-gcp-rr-functions",
+                object: "function.zip",
+            },
+        },
+    },
+    location: region,
+    name: "rr-send-email",
     project: project,
+    serviceConfig: {
+        environmentVariables: {
+            BACKEND_URL: rr_backend.uri,
+            SENDER_MAIL: email_username,
+            SENDER_PASSWORD: email_password,
+            RECIPIENT_MAIL: email_recipient,
+        }
+    }
 });
 
-const rr_email_function = new gcp.cloudfunctions.Function("tfer--room-reservation-410823-rr-email-function-europe-west1-0", {
-    name: "rr-email-function",
+const rr_send_email_function_access_control = new gcp.cloudrunv2.ServiceIamPolicy("room-reservation-410823-europe-west1-rr-send-email-access-control-0", {
+    name: "rr-send-email",
+    location: rr_send_email_function.location,
+    project: rr_send_email_function.project,
+    policyData: rr_noauth.apply(noauth => noauth.policyData),
+});
+
+const rr_schedule_send_email = new gcp.cloudscheduler.Job("oom-reservation-410823-europe-west1-rr-schedule-send-email-0", {
+    httpTarget: {
+        httpMethod: "GET",
+        uri: `https://${region}-${project}.cloudfunctions.net/rr-send-email`,
+    },
+    name: "rr-schedule-send-email",
     project: project,
     region: region,
-    runtime: "python37",
-});*/
+    schedule: "0 7 * * *",
+});
