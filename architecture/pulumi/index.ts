@@ -42,7 +42,6 @@ const rr_database_user = new gcp.sql.User("tfer--room-reservation-410823-rr-data
     name: db_user,
     password: db_password,
     project: project,
-
 });
 
 const rr_noauth = gcp.organizations.getIAMPolicyOutput({
@@ -74,7 +73,7 @@ const rr_backend = new gcp.cloudrunv2.Service("tfer--room-reservation-410823-eur
                 {
                     name: "DB_PASS",
                     value: db_password,
-                }
+                },
             ],
             volumeMounts: [{
                 name: "cloudsql",
@@ -107,10 +106,6 @@ const rr_frontend = new gcp.cloudrunv2.Service("tfer--room-reservation-410823-eu
             ports: [{
                 containerPort: 25498,
             }],
-            envs: [{
-                name: "BACKEND_URL",
-                value: "test",
-            }],
         }],
     },
 });
@@ -142,8 +137,8 @@ const rr_send_email_function = new gcp.cloudfunctionsv2.Function("room-reservati
             SENDER_MAIL: email_username,
             SENDER_PASSWORD: email_password,
             RECIPIENT_MAIL: email_recipient,
-        }
-    }
+        },
+    },
 });
 
 const rr_send_email_function_access_control = new gcp.cloudrunv2.ServiceIamPolicy("room-reservation-410823-europe-west1-rr-send-email-access-control-0", {
