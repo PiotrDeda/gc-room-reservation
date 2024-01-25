@@ -22,6 +22,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.google.cloud:spring-cloud-gcp-starter-sql-postgresql:5.0.0'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
     implementation 'org.postgresql:postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

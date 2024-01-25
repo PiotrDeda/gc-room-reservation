@@ -34,10 +34,10 @@ async function register(event) {
   <div>
     <form @submit="register">
       <label for="username">Username: </label>
-      <input v-model="username" type="text" id="username" required autofocus :maxlength="48" :minlength="4">
+      <input id="username" v-model="username" :maxlength="48" :minlength="4" autofocus required type="text">
       <br>
       <label for="password">Password: </label>
-      <input v-model="password" type="password" id="password" required :maxlength="48" :minlength="8">
+      <input id="password" v-model="password" :maxlength="48" :minlength="8" required type="password">
       <br>
       <button type="submit">Register</button>
     </form>

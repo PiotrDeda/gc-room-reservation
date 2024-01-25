@@ -24,10 +24,10 @@ async function login(event) {
   <div>
     <form @submit="login">
       <label for="username">Username: </label>
-      <input v-model="username" type="text" id="username" required autofocus>
+      <input id="username" v-model="username" autofocus required type="text">
       <br>
       <label for="password">Password: </label>
-      <input v-model="password" type="password" id="password" required>
+      <input id="password" v-model="password" required type="password">
       <br>
       <button type="submit">Login</button>
     </form>

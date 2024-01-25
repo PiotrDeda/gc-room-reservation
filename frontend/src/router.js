@@ -5,6 +5,8 @@ import Register from "@/components/auth/Register.vue";
 import Login from "@/components/auth/Login.vue";
 import Profile from "@/components/auth/Profile.vue";
 import UsersTable from "@/components/tables/UsersTable.vue";
+import AllReservationsTable from "@/components/tables/AllReservationsTable.vue";
+import MyReservationsTable from "@/components/tables/MyReservationsTable.vue";
 
 const routes = [
     {path: '/', name: "Home", component: Home},
@@ -13,6 +15,9 @@ const routes = [
     {path: '/login', name: "Login", component: Login},
     {path: '/profile', name: "Profile", component: Profile},
     {path: '/users', name: "Users", component: UsersTable},
+
+    {path: '/my-reservations', name: "My Reservations", component: MyReservationsTable},
+    {path: '/all-reservations', name: "All Reservations", component: AllReservationsTable},
 ];
 
 const router = createRouter({

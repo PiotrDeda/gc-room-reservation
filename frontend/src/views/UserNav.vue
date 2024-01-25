@@ -15,6 +15,7 @@ function logout() {
 <template>
   <div class="navbox">
     <BaseNav/>
+    <LinkCard to="My Reservations"/>
     <LinkCard to="Profile"/>
     <button @click.prevent="logout">Logout</button>
   </div>

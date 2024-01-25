@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-import UserService from '@/services/user-service.js';
+import UserService from '@/services/user-service';
 import resolveError from "@/resolve-error";
 import UserCard from "@/components/trinkets/cards/UserCard.vue";
 
